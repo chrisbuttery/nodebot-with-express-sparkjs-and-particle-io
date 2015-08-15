@@ -1,0 +1,24 @@
+{
+  "name": "nodebot-with-express-sparkjs-and-spark-io",
+  "version": "1.0.0",
+  "description": "An example express app that allows you to communicate with a Photon through events",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "spark-io",
+    "johnny-five",
+    "express",
+    "nodebot",
+    "sparkjs"
+  ],
+  "author": "Chris Buttery <info@chrisbuttery.com> (http://www.chrisbuttery.com)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3",
+    "johnny-five": "^0.8.86",
+    "spark": "^1.0.0",
+    "spark-io": "^0.6.1"
+  }
+}
