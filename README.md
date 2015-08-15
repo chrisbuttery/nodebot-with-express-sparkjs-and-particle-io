@@ -1,4 +1,4 @@
-#Controlling nodebots with the web
+#nodebot with express, sparkjs and spark-io
 
 An example of communicating
 between a Spark [Photon](https://store.particle.io/ "Get a Photon!") board and an [express](http://expressjs.com/ "express") server via events.
