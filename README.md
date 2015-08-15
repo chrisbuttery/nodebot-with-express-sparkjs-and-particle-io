@@ -10,7 +10,9 @@ The server will then listen for any events named `Bar`
 On the event of `Bar`, the server will emit `Foo` again - with a value.
 
 The device will listen for any events named `Foo`.
-On the event of `Foo`, the device will emit `Bah` with a value.
+On the event of `Foo`, the device will :
+- turn the LED on or off
+- emit `Bah` with a value.
 
 ##Requirements
 
