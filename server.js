@@ -14,9 +14,9 @@ let tally = 0
 function publishEvent(name, value) {
   return spark.publishEvent(name, value)
     .then(data => {
-      console.log("Event: " + name + " published succesfully: " + value)
+      console.log("Event: %s published succesfully: %s", name, value)
     }, err => {
-      console.log("Failed to publish event: " + name + ". " + err)
+      console.log("Failed to publish event: %s. %s", name, err)
     })
 }
 
