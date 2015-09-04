@@ -1,53 +1,68 @@
-var five = require('johnny-five')
-var SparkIO = require('spark-io')
-var spark = require('spark')
+import five from 'johnny-five'
+import Particle from 'particle-io'
+import spark from 'spark'
 
-var board
-var button
-var pin = 'D0'
-var led
-var tally = 0
+const btnPin = 'D0'
+const ledPin = 'D7'
+let tally = 0
+let ledValue
 
 /**
- * Create a new johnny-five board with spark-io
+ * publishEvent
+ * Publish a global event
+ * @param  {String} name  'Foo'
+ * @param  {Number} value 2
  */
 
-board = new five.Board({
-  io: new SparkIO({
-    token: process.env.SPARK_TOKEN,
-    deviceId: process.env.SPARK_DEVICE_ID_2,
+function publishEvent(name, value) {
+  return spark.publishEvent(name, value)
+    .then(data => {
+      console.log("Event: " + name + " published succesfully: " + value)
+    }, err => {
+      console.log("Failed to publish event: " + name + ". " + err)
+    })
+ }
+
+/**
+ * Create a new johnny-five board with particle-io
+ */
+
+const board = new five.Board({
+  io: new Particle({
+    token: process.env.PARTICLE_TOKEN,
+    deviceId: process.env.PARTICLE_DEVICE_ID_2,
     port: process.argv[2] || null
   })
 })
 
 // Let's go!
-board.on('ready', function () {
+board.on('ready', () => {
 
   // Create a new `button` and `led`
-  button = new five.Button(pin)
-  led = new five.Led('D7')
+  const button = new five.Button(btnPin)
+  const led = new five.Led(ledPin)
 
   // Inject the `button` hardware into
   // the Repl instance's context
   // allows direct command line access
   board.repl.inject({
     button: button,
-    on: function () {
+    on: () => {
       led.on()
     },
-    off: function () {
+    off: () => {
       led.off()
     },
     led: led
   })
 
   // On button press - call turnOn()
-  button.on('press', function () {
+  button.on('press', () => {
     turnOn()
   })
 
   // on button release - - call turnOff()
-  button.on('release', function () {
+  button.on('release', () => {
     turnOff()
   })
 })
@@ -78,7 +93,7 @@ function turnOn () {
  */
 function toggleLED () {
   if (!board.isReady) return
-  var ledValue = board.repl.context.led.value
+  ledValue = board.repl.context.led.value
 
   if (ledValue !== 0) {
     turnOff()
@@ -93,22 +108,24 @@ function toggleLED () {
  * the `Bar` event emitted from the server
  */
 
-spark.on('login', function () {
+spark.on('login', () => {
   console.log('device logged in')
 
   // Listen for 'Bar'
   // - toggle the LED
   // - update the running tally
-  // - call `Foo` with the new tally
-  spark.onEvent('Bar', function (e) {
-    console.log('Device received: ', e.data)
+  // - publish `Foo` with the updated tally
+  spark.onEvent('Bar', e => {
     toggleLED()
     tally = Number(e.data) + 1
-    spark.publishEvent('Foo', tally)
+
+    // publish an event for the server to listen to
+    publishEvent('Foo', tally)
   })
 })
 
+// your particle credentials
 spark.login({
-  username: 'you@email.com',
-  password: 'password'
+  username: process.env.PARTICLE_USER,
+  password: process.env.PARTICLE_PASS
 })

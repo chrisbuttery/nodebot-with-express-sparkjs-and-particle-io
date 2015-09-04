@@ -1,12 +1,13 @@
 {
-  "name": "nodebot-with-express-sparkjs-and-spark-io",
-  "version": "1.0.0",
+  "name": "nodebot-with-express-sparkjs-and-particle-io",
+  "version": "2.0.0",
   "description": "An example express app that allows you to communicate with a Photon through events",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "partile-io",
     "spark-io",
     "johnny-five",
     "express",
@@ -19,6 +20,6 @@
     "express": "^4.13.3",
     "johnny-five": "^0.8.86",
     "spark": "^1.0.0",
-    "spark-io": "^0.6.1"
+    "particle-io": "^0.8.1"
   }
 }
