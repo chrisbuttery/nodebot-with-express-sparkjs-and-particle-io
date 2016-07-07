@@ -1,6 +1,6 @@
 #nodebot with express, sparkjs and particle-io
 
-An example of communicating
+A proof of concept for communicating
 between a Particle [Photon](https://store.particle.io/ "Get a Photon!") board and an [express](http://expressjs.com/ "express") server via events.
 
 ![alt tag](https://github.com/chrisbuttery/nodebot-with-express-sparkjs-and-particle-io/blob/master/photon.gif)
